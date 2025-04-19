@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "1ab0b14f-cb2f-42fb-9ee5-ef796fee6e22",
+		"name": "Software API Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42603071"
+	},
+	"item": [
+		{
+			"name": "get all tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(task) {",
+							"        pm.expect(task).to.have.property('taskid');",
+							"        pm.expect(task).to.have.property('taskname');",
+							"        pm.expect(task).to.have.property('taskdescription');",
+							"        pm.expect(task).to.have.property('taskcategory');",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Taskid is a non-negative integer\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    responseData.forEach(function(task) {",
+							"        pm.expect(task.taskid).to.be.a('number').and.to.satisfy((num) => num >= 0, \"Taskid must be a non-negative integer\");",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Taskname, taskdescription, and taskcategory are non-empty strings\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData).to.be.an('array');",
+							"  responseData.forEach(function(task) {",
+							"    pm.expect(task.taskname).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Taskname should not be empty\");",
+							"    pm.expect(task.taskdescription).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Taskdescription should not be empty\");",
+							"    pm.expect(task.taskcategory).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Taskcategory should not be empty\");",
+							"  });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1000/getTasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"getTasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// No specific tests requested. Adding basic tests for status code, response time, and content type",
+							"",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Content type is text/html\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskname\": \"Complete project of software testing\",\n    \"taskdescription\": \"before the deadline\",\n    \"taskcategory\": \"Acadamics\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1000/addTask",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"addTask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test script for checking the status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test script for verifying the response time",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"// Test script for verifying the response body properties",
+							"pm.test(\"Response body has taskname, taskdescription, and taskcategory\", function () {",
+							"    pm.expect(pm.response.json()).to.have.all.keys('taskname', 'taskdescription', 'taskcategory');",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskname\": \"Completion of  software testing\",\n    \"taskdescription\": \"before deadline\",\n    \"taskcategory\": \"Acadamics\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1000/updateTask/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"updateTask",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// No response available to create specific tests",
+							"// Adding a basic test for status code",
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1000/deleteTask/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1000",
+					"path": [
+						"deleteTask",
+						"6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
