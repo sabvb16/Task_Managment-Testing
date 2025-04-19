@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #0f0f0f;
+            color: rgb(121, 167, 167);
+            text-shadow: 0px 0px 10px rgb(195, 226, 226);
+        }
+
+        h2 {
+            color: rgb(235, 235, 235);
+        }
+    </style>
+
+    <script defer src="Script.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body class="container mt-5">
+    <h2 class="text-center mb-4">Task Manager</h2>
+    <div class="card p-3 mb-4">
+        <h4>Add Task</h4>
+        <form id="taskForm">
+            <div class="mb-3">
+                <input type="text" id="taskname" class="form-control" placeholder="Task Name">
+            </div>
+            <div class="mb-3">
+                <input type="text" id="taskdescription" class="form-control" placeholder="Task Description">
+            </div>
+            <div class="mb-3">
+                <input type="text" id="taskcategory" class="form-control" placeholder="Task Category">
+            </div>
+            <button class="btn btn-success" onclick="addTasks(event)">Add Task</button>
+        </form>
+    </div>
+
+    <div class="card p-3 mb-4">
+        <button class="btn btn-primary" onclick="getAllTasks()">Get All Task</button>
+    </div>
+
+    <!-- modal for displaying all tasks -->
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskModalLabel">All Tasks</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Task Name</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taskTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for Updating Task -->
+    <div class="modal fade" id="updateTaskModal" tabindex="-1" aria-labelledby="updateTaskModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateTaskModalLabel">Update Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateTaskForm">
+                        <input type="hidden" id="taskid">
+                        <div class="mb-3">
+                            <label for="taskname" class="form-label">Task Name</label>
+                            <input type="text" class="form-control" id="Utaskname">
+                        </div>
+                        <div class="mb-3">
+                            <label for="taskdescription" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="Utaskdescription">
+                        </div>
+                        <div class="mb-3">
+                            <label for="taskcategory" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="Utaskcategory">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="updateTask">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for Deleting Task -->
+    <div class="modal fade" id="deleteTaskModal" tabindex="-1" aria-labelledby="deleteTaskModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteTaskModalLabel">Delete Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this task?</p>
+                    <input type="hidden" id="deleteTaskId">
+                    <button type="button" class="btn btn-danger" id="deleteTask">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
